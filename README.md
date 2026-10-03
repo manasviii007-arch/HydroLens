@@ -849,3 +849,28 @@ This allows the satellite-derived indicators and predictive models to be calibra
 Riya Arora
 
 Full Stack Developer & AI Arc
+Manasvi Chugh
+Full Stack Developer & Geospatial Systems Lead
+🏆 Hackathon
+Developed for:
+Schneider Electric Yuva Yodha Energy Tech Hackathon
+Challenge 01
+Sustainable Agriculture — Energy, Water & Productivity
+HydroLens explores how satellite intelligence, predictive analytics, optimization and renewable-energy-aware planning can support more informed agricultural resource management.
+⚠️ Important Technical Note
+HydroLens is currently an MVP / decision-support prototype.
+Satellite-derived indices such as NDVI and NDWI provide useful spatial indicators but do not independently establish exact root-zone soil moisture, crop yield, or crop failure.
+Real-world deployment would require:
+Ground-truth calibration
+Crop- and region-specific models
+Reliable weather data
+Validation across multiple seasons
+Operational satellite-data pipelines
+Appropriate agricultural-domain oversight
+The simulation results presented in this repository are modelled benchmark scenarios, not claims of field-validated impact.
+📄 License
+This project is licensed under the MIT License.
+See LICENSE for details.
+�
+🌾 HydroLens
+See the Risk. Plan Before the Loss. 
