@@ -1,241 +1,851 @@
-```markdown
-# 🌾 HydroLens — Satellite-Powered Agricultural Water & Climate Intelligence
+🌾 HydroLens
+
+Satellite-Powered Agricultural Water & Climate Intelligence
 
 <p align="center">
-  <b><i>“See the Risk. Plan Before the Loss.”</i></b>
-</p>
+  <b>“See the Risk. Plan Before the Loss.”</b>
+</p><p align="center">
+  <img src="https://img.shields.io/badge/Hackathon-Schneider%20Electric%20Yuva%20Yodha-00D2FF?style=for-the-badge" />
+  <img src="https://img.shields.io/badge/Challenge-01%20%7C%20Sustainable%20Agriculture-00E5C0?style=for-the-badge" />
+  <img src="https://img.shields.io/badge/Python-3.10+-3776AB?style=for-the-badge&logo=python&logoColor=white" />
+  <img src="https://img.shields.io/badge/FastAPI-Backend-009688?style=for-the-badge&logo=fastapi&logoColor=white" />
+  <img src="https://img.shields.io/badge/React-Frontend-61DAFB?style=for-the-badge&logo=react&logoColor=black" />
+  <img src="https://img.shields.io/badge/Geospatial-Satellite%20Analytics-2E7D32?style=for-the-badge" />
+</p><p align="center">
+  <a href="#-overview">Overview</a> •
+  <a href="#-problem">Problem</a> •
+  <a href="#-solution">Solution</a> •
+  <a href="#-architecture">Architecture</a> •
+  <a href="#-tech-stack">Tech Stack</a> •
+  <a href="#-quick-start">Quick Start</a>
+</p>---
 
-<p align="center">
-  <a href="#-about-hydrolens"><img src="https://img.shields.io/badge/Hackathon-Schneider%20Electric%20Yuva%20Yodha-00D2FF?style=for-the-badge&logo=schneiderelectric" alt="Hackathon"></a>
-  <a href="#-track-alignment"><img src="https://img.shields.io/badge/Challenge-1%3A%20Sustainable%20Agriculture-00E5C0?style=for-the-badge&logo=leaf" alt="Challenge 1"></a>
-  <a href="#-tech-stack"><img src="https://img.shields.io/badge/Stack-Python%20%7C%20FastAPI%20%7C%20React%20%7C%20Mapbox-061D23?style=for-the-badge&logo=python" alt="Tech Stack"></a>
-  <a href="#-license"><img src="https://img.shields.io/badge/License-MIT-blue.svg?style=for-the-badge" alt="License"></a>
-</p>
+🚀 Overview
 
----
+HydroLens is a satellite-powered agricultural water and climate intelligence platform designed for Farmer Producer Organizations (FPOs), water cooperatives, and agricultural decision-makers.
 
-## 📌 About HydroLens
+Instead of relying primarily on expensive field-level sensor deployment, HydroLens combines:
 
-**HydroLens** is an end-to-end climate resilience and agricultural intelligence platform built for **Farmer Producer Organizations (FPOs)**, water cooperatives, and regional agricultural officers. 
+- 🛰️ Multispectral satellite observations
+- 🌦️ Weather and forecast signals
+- 🌱 Crop-stage intelligence
+- 💧 Water availability
+- ☀️ Solar pumping capacity
+- 🤖 Predictive analytics
+- 🔀 Constraint-based optimization
 
-During dry spells and heatwaves, smallholder farmers understand their individual plots well, but regional decision-makers face a critical **community visibility gap**—they cannot easily observe how moisture stress develops across hundreds of neighboring fields or determine where limited irrigation resources should be prioritized before water stress becomes critical.
+to transform raw environmental data into community-scale risk maps, water-allocation recommendations, scenario simulations, and actionable farmer alerts.
 
-While traditional in-situ soil probes carry high deployment costs and maintenance hurdles across fragmented smallholder plots, **HydroLens reduces dependence on field-level hardware**. By synthesizing open multispectral satellite observations (Sentinel-2, Landsat-9), localized IMD weather forecasts, crop-stage growth models, and off-grid solar generation capacity, HydroLens delivers:
+The core idea
 
-1. **Community-Scale Risk Mapping** across contiguous farming blocks.
-2. **Predictive Scenario Simulations** under severe drought and heatwave constraints.
-3. **Risk-Prioritized Resource Allocation** aligned with clean solar pumping shifts.
-4. **Harvest & Post-Harvest Intelligence** to coordinate storage, transport, and residue management.
-
----
-
-## 🎯 The 4 Solution Pillars
-
-HydroLens operates across four interconnected functional modules:
-
-```
-┌────────────────────────────────────────────────────────────────────────────────────────┐
-│                                   HYDROLENS PLATFORM                                   │
-├──────────────────────────┬──────────────────────────┬──────────────────────────────────┤
-│ 01. COMMUNITY WATER RISK │ 02. SCENARIO ENGINE      │ 03. RESOURCE PRIORITIZATION      │
-│ Satellite-based NDWI &   │ Simulates 5-14 day dry   │ Prioritizes critical fields &    │
-│ NDVI canopy moisture     │ spells against shared    │ aligns shifts with peak solar    │
-│ maps across 100+ fields. │ water tank reserves.     │ hours to reduce diesel reliance. │
-├──────────────────────────┴──────────────────────────┴──────────────────────────────────┤
-│ 04. HARVEST & RESIDUE INTELLIGENCE                                                     │
-│ Predicts harvest timing & volume to flag storage, transport, & residue bottlenecks.   │
-└────────────────────────────────────────────────────────────────────────────────────────┘
-```
-
-1. **🌊 01 — Community Water Risk:** Processes 10m-resolution Sentinel-2 and Landsat multispectral imagery to calculate Normalized Difference Water Index (NDWI) and NDVI canopy vigor across contiguous farming blocks without requiring heavy ground hardware.
-2. **🔮 02 — Scenario Engine:** Enables FPO managers to simulate drought and heatwave conditions, evaluating competing resource allocation strategies before water stress becomes critical.
-3. **☀️ 03 — Resource Prioritization (Solar-Enabled):** Ranks vulnerable fields by crop stage and soil moisture deficit, scheduling irrigation queues to match peak off-grid solar pump generation hours to reduce diesel dependence.
-4. **🌾 04 — Harvest & Residue Intelligence:** Predicts upcoming harvest windows and crop yields, helping communities coordinate storage, transport logistics, and residue-management resources before harvesting windows become critical.
+«Detect water stress → predict what happens next → simulate constraints → prioritize scarce resources → coordinate irrigation before crop damage becomes critical.»
 
 ---
 
-## 🏗️ System Architecture
+🎯 The Problem
 
-The HydroLens pipeline transforms raw orbital imagery and meteorological signals into actionable FPO dashboard insights and farmer WhatsApp/SMS alerts.
+Agricultural water decisions are often made with incomplete visibility.
 
-```
-┌──────────────────────────────────────────────────────────────────────────────────┐
-│                            1. DATA INGESTION LAYER                               │
-│                                                                                  │
-│   ┌──────────────────┐   ┌──────────────────┐   ┌────────────────────────────┐   │
-│   │ Sentinel-2 (10m) │   │  Landsat-9 (30m) │   │  IMD Weather Forecast APIs │   │
-│   └────────┬─────────┘   └────────┬─────────┘   └─────────────┬──────────────┘   │
-│            │                      │                           │                  │
-│            └──────────────┬───────┴───────────────────────────┘                  │
-│                           ▼                                                      │
-│   ┌─────────────────────────────────────────┐   ┌────────────────────────────┐   │
-│   │ OpenET Evapotranspiration / Soil Data   │   │ ISRO Bhuvan Spatial Layers │   │
-│   └───────────────────────┬─────────────────┘   └─────────────┬──────────────┘   │
-└───────────────────────────┼───────────────────────────────────┼──────────────────┘
-                            ▼                                   ▼
-┌──────────────────────────────────────────────────────────────────────────────────┐
-│                          2. ANALYTICS & ML CORE ENGINE                           │
-│                                                                                  │
-│   ┌──────────────────────────────────────────────────────────────────────────┐   │
-│   │ Python Geospatial Pipeline (Rasterio, GeoPandas, GDAL, Shapely)          │   │
-│   │  • Multispectral Band Math: NDWI = (NIR - SWIR) / (NIR + SWIR)          │   │
-│   │  • NDVI Canopy Vigor Index & Soil Moisture Depletion Calibration         │   │
-│   └───────────────────────────────────┬──────────────────────────────────────┘   │
-│                                       ▼                                          │
-│   ┌──────────────────────────────────────────────────────────────────────────┐   │
-│   │ PyTorch Predictive Time-Series Model                                     │   │
-│   │  • 7–14 Day Soil Moisture Depletion & Harvest Window Prediction          │   │
-│   └───────────────────────────────────┬──────────────────────────────────────┘   │
-└───────────────────────────────────────┼──────────────────────────────────────────┘
-                                        ▼
-┌──────────────────────────────────────────────────────────────────────────────────┐
-│                        3. OPTIMIZATION & SCENARIO ENGINE                         │
-│                                                                                  │
-│   ┌──────────────────────────────────────────────────────────────────────────┐   │
-│   │ Google OR-Tools Constraint Solver                                        │   │
-│   │  • Objective: Minimize Crop Stress Impact Across Block                   │   │
-│   │  • Constraints: Shared Water Tank Volume (L) vs. Peak Solar kW Available  │   │
-│   └───────────────────────────────────┬──────────────────────────────────────┘   │
-└───────────────────────────────────────┼──────────────────────────────────────────┘
-                                        ▼
-┌──────────────────────────────────────────────────────────────────────────────────┐
-│                            4. DELIVERY & USER LAYER                              │
-│                                                                                  │
-│      ┌──────────────────────────────────┐    ┌────────────────────────────┐      │
-│      │  React.js + Mapbox GL Dashboard  │    │  Twilio / WhatsApp API     │      │
-│      │  (For FPOs & Water Cooperatives) │    │  (Action Alerts for Farmers)│     │
-│      └──────────────────────────────────┘    └────────────────────────────┘      │
-└──────────────────────────────────────────────────────────────────────────────────┘
-```
+A farmer may understand their own field, but an FPO or regional water manager may need to coordinate resources across hundreds of fields simultaneously.
+
+During:
+
+- prolonged dry spells,
+- heatwaves,
+- irregular rainfall,
+- groundwater stress, or
+- limited irrigation availability,
+
+the key question becomes:
+
+«“Which fields need limited water first, and what happens if the available water is not enough?”»
+
+Traditional field monitoring can become difficult and expensive across fragmented smallholder farms.
+
+HydroLens addresses this community-level visibility and prioritization gap using satellite-derived indicators and predictive decision support.
 
 ---
 
-## 🛠️ Tech Stack
+💡 Our Solution
 
-| Layer | Technology / Library | Purpose |
-| :--- | :--- | :--- |
-| **Data Ingestion** | Sentinel Hub API, USGS EarthExplorer, IMD API | Ingests Sentinel-2 L2A, Landsat-9, and localized weather forecasts |
-| **Geospatial Processing**| `rasterio`, `geopandas`, `gdal`, `shapely`, `pyproj` | Satellite band extraction, NDWI/NDVI masking, polygon clipping |
-| **ML & Analytics** | `PyTorch`, `scikit-learn`, `numpy`, `pandas` | Predictive soil moisture depletion curves & harvest timing models |
-| **Optimization** | `Google OR-Tools`, `scipy.optimize` | Constraint-satisfaction solver for water allocation vs. solar shifts |
-| **Backend API** | `FastAPI`, `Uvicorn`, `Pydantic`, `PostgreSQL/PostGIS` | Asynchronous REST APIs and spatial geospatial data querying |
-| **Frontend Web UI** | `React.js`, `Tailwind CSS`, `Mapbox GL JS`, `Recharts` | Interactive FPO command dashboard & scenario simulation UI |
-| **Farmer Messaging** | `Twilio API`, `WhatsApp Business API` | Low-bandwidth SMS/WhatsApp alert dispatch to smallholder farmers |
+HydroLens converts satellite and environmental signals into a decision-support layer for agricultural water management.
 
----
+4 interconnected intelligence pillars
 
-## 🔄 User Journey: "From Satellite Pass to Saved Harvest"
-
-```
- 🛰️ Satellite Pass ────► 👁️ Detect Risk ────► 🔮 Predict Trend ────► 📊 Simulate Scenario
-                                                                             │
- 🛡️ Protect & Save ◄──── ☀️ Plan Solar Shift ◄──── 🔀 Prioritize Fields ◄────┘
-```
-
-1. **Observe (Satellite Pass):** Sentinel-2 captures multispectral bands over a 450-acre farming block.
-2. **Detect (Moisture Drop):** Automated pipeline computes NDWI and flags Plot A-12 (Groundnut) as entering critical canopy water stress.
-3. **Predict (Risk Forecasting):** Time-series ML model projects soil moisture depletion over the next 7 days.
-4. **Simulate (Drought Scenario):** FPO manager inputs a 5-day forecasted dry spell into the Scenario Simulator with a 100,000L shared water reserve.
-5. **Prioritize (Resource Allocation):** Constraint solver ranks 15 high-vulnerability fields and assigns water priority over non-stressed plots.
-6. **Plan (Solar Shift Sync):** Irrigation queues are scheduled during peak off-grid solar generation (11:30 AM – 02:30 PM), reducing diesel reliance.
-7. **Protect (Farmer Action):** Smallholders receive WhatsApp alerts with designated solar pumping time slots, protecting crop yields and post-harvest resources.
+Module| What it does
+🌊 Community Water Risk| Maps vegetation and water-stress indicators across contiguous agricultural blocks
+🔮 Scenario Engine| Simulates drought/heatwave conditions and limited-water scenarios
+☀️ Resource Prioritization| Prioritizes vulnerable fields while considering available water and solar pumping windows
+🌾 Harvest & Residue Intelligence| Forecasts harvest windows and helps anticipate storage, transport and residue-management bottlenecks
 
 ---
 
-## 📈 Proof of Value: Scenario Simulation Benchmark
+🌊 01 — Community Water Risk
 
-Under a simulated **5-day heatwave constraint** across 100 farming plots (450 acres) with a **100,000L shared water reserve**:
+HydroLens processes multispectral satellite imagery to derive vegetation and water-related indicators such as:
 
-* **Uncoordinated Equal Distribution (Approach A):** Distributing 1,000L equally to all plots leaves every field under-hydrated, resulting in **17 fields suffering severe, unrecoverable crop failure** (~38% block yield loss).
-* **HydroLens Risk-Based AI Allocation (Approach B):** Directing water to highest-vulnerability plots during peak solar hours restricts severe stress to **only 6 fields**—saving **11 farms from critical crop loss** (a **65% reduction in crop damage**).
+NDVI — Vegetation Vigor
 
----
+NDVI = (NIR - RED) / (NIR + RED)
 
-## 🚀 Quickstart & Installation
+Used as an indicator of vegetation health and canopy vigor.
 
-### Prerequisites
-* Python 3.10+
-* Node.js 18+
-* PostgreSQL with PostGIS extension (or SQLite for local testing)
+NDWI — Water-Related Vegetation Signal
 
-### 1. Clone the Repository
-```bash
-git clone https://github.com/your-username/HydroLens.git
-cd HydroLens
-```
+NDWI = (NIR - SWIR) / (NIR + SWIR)
 
-### 2. Backend Setup
-```bash
-# Navigate to backend folder
-cd backend
+Used to derive a water-related vegetation signal and identify spatial changes associated with moisture stress.
 
-# Create virtual environment
-python -m venv venv
-source venv/bin/activate  # On Windows: venv\Scripts\activate
+HydroLens combines these signals with spatial boundaries and temporal observations to identify areas requiring further attention.
 
-# Install dependencies
-pip install -r requirements.txt
-
-# Configure Environment Variables
-cp .env.example .env
-# Add your Sentinel Hub, Mapbox, and Twilio API keys to .env
-
-# Run FastAPI Server
-uvicorn main:app --reload --port 8000
-```
-
-### 3. Frontend Setup
-```bash
-# Navigate to frontend folder (in a new terminal)
-cd frontend
-
-# Install dependencies
-npm install
-
-# Start development server
-npm start
-```
-*Open `http://localhost:3000` in your browser to view the FPO Command Dashboard and Scenario Simulator UI.*
+«Important: Satellite indices are indicators, not direct measurements of root-zone soil moisture. HydroLens treats them as inputs to a broader risk model rather than as ground-truth measurements.»
 
 ---
 
-## 🗺️ Project Directory Structure
+🔮 02 — Scenario Engine
 
-```
+What happens if a farming block experiences a 5–14 day dry spell?
+
+What if the available water reserve is limited?
+
+What if several fields enter stress simultaneously?
+
+HydroLens allows an FPO manager to model scenarios such as:
+
+Available Water
+       ↓
+Weather / Dry Spell
+       ↓
+Crop Vulnerability
+       ↓
+Projected Stress
+       ↓
+Resource Allocation
+       ↓
+Expected Impact
+
+Example:
+
+Scenario:
+5-day heatwave
+100 farming plots
+100,000 L shared water reserve
+
+        ↓
+
+HydroLens evaluates:
+• field vulnerability
+• crop stage
+• projected stress
+• water demand
+• available resource
+
+        ↓
+
+Output:
+Prioritized irrigation allocation
++ projected risk
++ affected fields
++ resource utilization
+
+---
+
+☀️ 03 — Risk-Based Resource Prioritization
+
+When water is scarce, equal allocation does not necessarily minimize crop damage.
+
+HydroLens uses a constraint-based optimization layer to prioritize fields according to factors such as:
+
+- Current risk level
+- Crop stage
+- Vegetation condition
+- Estimated moisture deficit
+- Available water
+- Irrigation demand
+- Solar pumping availability
+
+The optimization objective can be represented as:
+
+Minimize:
+    Total Crop Stress Impact
+
+Subject to:
+    Water Reserve ≤ Available Water
+    Pump Capacity ≤ Available Pump Capacity
+    Irrigation Schedule ≤ Available Time Window
+
+This converts HydroLens from a monitoring dashboard into a resource decision-support system.
+
+---
+
+☀️ Solar-Aware Irrigation
+
+HydroLens can incorporate available solar-generation windows into irrigation scheduling.
+
+Example:
+
+11:30 AM ───────────────────── 02:30 PM
+              ☀️
+       Peak Solar Window
+              ↓
+      Irrigation Queue
+              ↓
+      Priority Fields
+
+The goal is to coordinate water pumping with renewable-energy availability where the local infrastructure supports it, potentially reducing reliance on diesel-powered pumping.
+
+---
+
+🌾 04 — Harvest & Residue Intelligence
+
+Water stress is not the only operational problem.
+
+A concentrated harvest window can create downstream bottlenecks:
+
+Field Risk
+    ↓
+Harvest Prediction
+    ↓
+Expected Harvest Volume
+    ↓
+┌───────────┬────────────┬──────────────┐
+│ Storage   │ Transport  │ Residue Mgmt │
+└───────────┴────────────┴──────────────┘
+
+HydroLens aims to provide early visibility so FPOs can coordinate resources before harvest pressure peaks.
+
+---
+
+🛰️ System Architecture
+
+                         HYDROLENS
+                            │
+                            ▼
+              ┌─────────────────────────┐
+              │    DATA INGESTION       │
+              ├─────────────────────────┤
+              │ Sentinel-2               │
+              │ Landsat                  │
+              │ Weather / Forecast Data  │
+              │ Spatial Data              │
+              │ ET / Soil Signals         │
+              └────────────┬────────────┘
+                           │
+                           ▼
+              ┌─────────────────────────┐
+              │  GEOSPATIAL PROCESSING  │
+              ├─────────────────────────┤
+              │ Raster Processing        │
+              │ NDVI / NDWI              │
+              │ Cloud / Spatial Masks    │
+              │ Field-level Aggregation  │
+              └────────────┬────────────┘
+                           │
+                           ▼
+              ┌─────────────────────────┐
+              │   ML / ANALYTICS CORE   │
+              ├─────────────────────────┤
+              │ Risk Estimation          │
+              │ Time-Series Analysis     │
+              │ Moisture Trend           │
+              │ Harvest Forecasting      │
+              └────────────┬────────────┘
+                           │
+                           ▼
+              ┌─────────────────────────┐
+              │ SCENARIO + OPTIMIZATION │
+              ├─────────────────────────┤
+              │ Drought Simulation       │
+              │ Water Constraints        │
+              │ Solar Constraints        │
+              │ OR-Tools Optimization    │
+              └────────────┬────────────┘
+                           │
+                           ▼
+              ┌─────────────────────────┐
+              │     DECISION LAYER      │
+              ├─────────────────────────┤
+              │ FPO Dashboard            │
+              │ Risk Map                 │
+              │ Scenario Simulator       │
+              │ Irrigation Priority      │
+              └────────────┬────────────┘
+                           │
+                           ▼
+              ┌─────────────────────────┐
+              │      FARMER LAYER       │
+              ├─────────────────────────┤
+              │ WhatsApp Alerts          │
+              │ SMS Notifications        │
+              │ Irrigation Slots         │
+              │ Action Recommendations   │
+              └─────────────────────────┘
+
+---
+
+🏗️ Technical Architecture
+
+1. Data Ingestion Layer
+
+Sentinel-2
+    │
+Landsat-9
+    │
+Weather Data
+    │
+Spatial Layers
+    │
+    ▼
+Data Normalization
+
+2. Geospatial Analytics
+
+Raw Satellite Imagery
+        ↓
+Band Extraction
+        ↓
+Cloud / Quality Masking
+        ↓
+Spatial Clipping
+        ↓
+NDVI + NDWI
+        ↓
+Field-Level Aggregation
+
+3. Predictive Layer
+
+Historical observations are transformed into temporal features for risk and trend estimation.
+
+Satellite Time Series
+        +
+Weather Signals
+        +
+Crop Stage
+        ↓
+Predictive Model
+        ↓
+7–14 Day Risk / Trend Estimate
+
+4. Optimization Layer
+
+Risk Scores
+    +
+Water Availability
+    +
+Crop Vulnerability
+    +
+Solar Availability
+    ↓
+OR-Tools Constraint Solver
+    ↓
+Prioritized Irrigation Schedule
+
+5. Delivery Layer
+
+                    ┌───────────────┐
+                    │ FastAPI       │
+                    │ Backend       │
+                    └───────┬───────┘
+                            │
+             ┌──────────────┴──────────────┐
+             ▼                             ▼
+      React Dashboard               Farmer Alerts
+             │                             │
+       Risk Maps                     WhatsApp/SMS
+       Scenario UI
+       Analytics
+
+---
+
+🛠️ Tech Stack
+
+Layer| Technologies| Purpose
+🛰️ Satellite Data| Sentinel-2, Landsat-9| Multispectral Earth observation
+🌦️ Weather| Weather / IMD data sources| Forecast and environmental signals
+🗺️ Geospatial| Rasterio, GeoPandas, GDAL, Shapely, PyProj| Raster processing and spatial analytics
+🧮 Analytics| NumPy, Pandas, Scikit-learn| Feature engineering and statistical processing
+🤖 ML| PyTorch| Predictive modelling and time-series experimentation
+🔀 Optimization| Google OR-Tools, SciPy| Resource allocation and constraint solving
+⚡ Backend| FastAPI, Uvicorn, Pydantic| REST API and application services
+🗄️ Database| PostgreSQL + PostGIS| Spatial and application data
+⚛️ Frontend| React.js| Interactive dashboard
+🎨 UI| Tailwind CSS| Interface styling
+🗺️ Maps| Mapbox GL JS / mapping layer| Spatial visualization
+📊 Visualization| Recharts| Analytics and KPI visualization
+📱 Alerts| Twilio / WhatsApp Business API| Farmer communication
+
+---
+
+🔄 End-to-End User Journey
+
+“From Satellite Pass to Saved Harvest”
+
+🛰️ OBSERVE
+Satellite observation
+       ↓
+👁️ DETECT
+Identify spatial risk
+       ↓
+🔮 PREDICT
+Estimate near-term trend
+       ↓
+📊 SIMULATE
+Test drought / water scenarios
+       ↓
+🔀 PRIORITIZE
+Rank vulnerable fields
+       ↓
+☀️ OPTIMIZE
+Align with available resources
+       ↓
+📱 ALERT
+Send actionable information
+       ↓
+🌾 PROTECT
+Reduce avoidable crop stress
+
+Example workflow
+
+1. Observe
+
+A satellite observation covers a farming block.
+
+2. Detect
+
+HydroLens identifies a significant change in vegetation/water-related indicators for a field.
+
+3. Predict
+
+The temporal analytics layer estimates how the risk could evolve over the following days.
+
+4. Simulate
+
+The FPO manager enters a hypothetical dry spell and shared water constraint.
+
+5. Prioritize
+
+The optimization engine identifies fields requiring earlier intervention under the selected assumptions.
+
+6. Schedule
+
+Available solar pumping windows can be incorporated into the irrigation schedule.
+
+7. Communicate
+
+Farmers receive relevant irrigation or risk information through supported messaging channels.
+
+---
+
+📈 Proof of Value — Simulation Benchmark
+
+Simulated 5-Day Heatwave Scenario
+
+The following benchmark represents a controlled simulation, not a measured field trial.
+
+100 farming plots
+450 acres
+100,000 L shared water reserve
+5-day heatwave constraint
+
+Scenario A — Equal Distribution
+
+100,000 L / 100 plots
+       ↓
+1,000 L per plot
+       ↓
+Same allocation regardless of vulnerability
+
+Scenario B — HydroLens Risk-Based Allocation
+
+100,000 L reserve
+       ↓
+Risk + crop stage + vulnerability
+       ↓
+Priority-based allocation
+       ↓
+Solar-aware scheduling
+
+Simulation Result
+
+Metric| Equal Allocation| HydroLens Simulation
+Severe-stress fields| 17| 6
+Fields avoiding severe stress| —| 11
+Simulated reduction in severe crop damage| —| ~65%
+
+«⚠️ Benchmark note: These numbers are scenario-simulation outputs under the stated assumptions. They should not be interpreted as validated agricultural field results until calibrated and evaluated against ground-truth observations.»
+
+---
+
+🎯 Why HydroLens?
+
+HydroLens focuses on the gap between “knowing there is a problem” and “deciding what to do with limited resources.”
+
+Traditional workflow
+
+Observe problem
+      ↓
+Manual assessment
+      ↓
+Delayed decision
+      ↓
+Resource allocation
+
+HydroLens workflow
+
+Satellite + Weather
+        ↓
+Continuous spatial signals
+        ↓
+Risk estimation
+        ↓
+Scenario simulation
+        ↓
+Optimization
+        ↓
+Actionable decision
+
+The platform is designed around decision support, rather than simply displaying satellite imagery.
+
+---
+
+🧩 Key Differentiators
+
+🛰️ Community-scale visibility
+
+Instead of focusing only on individual sensor-equipped fields, HydroLens is designed to analyze contiguous agricultural blocks.
+
+🔮 What-if simulation
+
+FPOs can test resource constraints before implementing a response.
+
+💧 Risk-based allocation
+
+Water allocation can account for differences in vulnerability rather than treating every field identically.
+
+☀️ Energy-aware planning
+
+Irrigation scheduling can incorporate available solar pumping windows.
+
+🌾 Beyond irrigation
+
+The roadmap extends from water-risk intelligence into harvest, storage, transport and residue coordination.
+
+---
+
+📊 Dashboard Capabilities
+
+The HydroLens dashboard is designed around the information an FPO decision-maker needs.
+
+Overview
+
+┌──────────────────────────────────────────────────────────┐
+│                  HYDROLENS OVERVIEW                     │
+├────────────┬────────────┬────────────┬──────────────────┤
+│ Risk Score │ High Risk  │ Water Left │ Solar Capacity  │
+├────────────┴────────────┴────────────┴──────────────────┤
+│                                                        │
+│                 COMMUNITY RISK MAP                    │
+│                                                        │
+│       🟢 Low     🟡 Moderate     🔴 Critical          │
+│                                                        │
+├────────────────────────────────────────────────────────┤
+│              TOP PRIORITY FIELDS                       │
+├────────────────────────────────────────────────────────┤
+│ Field │ Crop │ Risk │ Stage │ Priority │ Action       │
+└────────────────────────────────────────────────────────┘
+
+Scenario Simulator
+
+Users can modify:
+
+- Dry-spell duration
+- Available water
+- Heatwave severity
+- Solar availability
+- Crop vulnerability assumptions
+
+and inspect how the resulting allocation changes.
+
+---
+
+📱 Farmer Communication
+
+HydroLens is designed to translate complex analytics into simple actions.
+
+Example
+
+🌾 HydroLens Alert
+
+Your field is currently marked as
+HIGH WATER-STRESS RISK.
+
+Recommended irrigation window:
+11:30 AM – 12:30 PM
+
+Reason:
+High vulnerability + available
+solar pumping capacity.
+
+Please follow your FPO's
+local irrigation instructions.
+
+The final messaging layer can be adapted for WhatsApp, SMS, or other low-bandwidth communication channels.
+
+---
+
+🗂️ Project Structure
+
 HydroLens/
+│
 ├── backend/
 │   ├── app/
-│   │   ├── api/             # FastAPI routes (satellites, simulation, alerts)
-│   │   ├── core/            # Config & environment settings
-│   │   ├── services/        # Satellite ingestion, NDWI calculation, OR-Tools solver
-│   │   └── models/          # PyTorch soil moisture depletion models
+│   │   ├── api/
+│   │   │   ├── risk/
+│   │   │   ├── simulation/
+│   │   │   └── alerts/
+│   │   │
+│   │   ├── core/
+│   │   │   ├── config.py
+│   │   │   └── environment.py
+│   │   │
+│   │   ├── services/
+│   │   │   ├── satellite/
+│   │   │   ├── geospatial/
+│   │   │   ├── optimization/
+│   │   │   └── alerts/
+│   │   │
+│   │   └── models/
+│   │       └── predictive/
+│   │
 │   ├── requirements.txt
-│   └── main.py              # Application entry point
+│   └── main.py
+│
 ├── frontend/
 │   ├── public/
 │   ├── src/
-│   │   ├── components/      # FPO Dashboard, Satellite Map, Simulator UI, Mobile Alert
-│   │   ├── pages/           # Main route views
-│   │   └── utils/           # Mapbox layers & API fetchers
+│   │   ├── components/
+│   │   │   ├── Dashboard/
+│   │   │   ├── RiskMap/
+│   │   │   ├── ScenarioSimulator/
+│   │   │   └── FarmerView/
+│   │   │
+│   │   ├── pages/
+│   │   ├── services/
+│   │   └── utils/
+│   │
 │   ├── package.json
 │   └── tailwind.config.js
-├── docs/                    # Architecture diagrams, pitch deck PDFs
+│
+├── docs/
+│   ├── architecture/
+│   ├── research/
+│   └── pitch/
+│
 ├── README.md
 └── LICENSE
-```
 
 ---
 
-## 👥 Team & Acknowledgments
+⚡ Quick Start
 
-* **Riya Arora** — *Full Stack Developer & AI Architect*
-* **Manasvi Chugh** — *Full Stack Developer & Geospatial Systems Lead*
+Prerequisites
 
-Developed for the **Schneider Electric Yuva Yodha Energy Tech Hackathon** under **Challenge 1: Sustainable Agriculture — Energy, Water & Productivity**. Special thanks to Schneider Electric India for inspiring digital, clean energy solutions for smallholder resilience.
+Make sure you have:
+
+- Python 3.10+
+- Node.js 18+
+- npm
+- PostgreSQL + PostGIS (optional for local prototype)
+- Required API credentials configured in ".env"
 
 ---
 
-## 📄 License
+1. Clone the repository
 
-This project is licensed under the MIT License — see the [LICENSE](LICENSE) file for details.
-```
+git clone https://github.com/your-username/HydroLens.git
+cd HydroLens
+
+---
+
+2. Backend
+
+cd backend
+
+python -m venv venv
+
+Windows
+
+venv\Scripts\activate
+
+macOS / Linux
+
+source venv/bin/activate
+
+Install dependencies:
+
+pip install -r requirements.txt
+
+Create your environment file:
+
+cp .env.example .env
+
+Configure the required variables.
+
+Example:
+
+SENTINEL_HUB_CLIENT_ID=
+SENTINEL_HUB_CLIENT_SECRET=
+
+MAPBOX_TOKEN=
+
+DATABASE_URL=
+
+TWILIO_ACCOUNT_SID=
+TWILIO_AUTH_TOKEN=
+TWILIO_PHONE_NUMBER=
+
+Start the API:
+
+uvicorn main:app --reload --port 8000
+
+Backend:
+
+http://localhost:8000
+
+API documentation:
+
+http://localhost:8000/docs
+
+---
+
+3. Frontend
+
+Open a new terminal:
+
+cd frontend
+npm install
+npm start
+
+Frontend:
+
+http://localhost:3000
+
+---
+
+🔐 Environment Variables
+
+Never commit API keys or credentials to GitHub.
+
+Use:
+
+.env
+
+and keep it in ".gitignore".
+
+Example:
+
+.env
+.env.local
+venv/
+__pycache__/
+node_modules/
+dist/
+build/
+
+---
+
+🧪 Development & Validation
+
+HydroLens can be evaluated at multiple levels:
+
+Data Layer
+
+- Satellite data availability
+- Cloud / quality filtering
+- Spatial alignment
+- Temporal consistency
+
+Analytics Layer
+
+- NDVI / NDWI calculation
+- Risk-score stability
+- Time-series behaviour
+- Crop-stage assumptions
+
+Optimization Layer
+
+- Constraint satisfaction
+- Water-budget feasibility
+- Allocation reproducibility
+- Solar-window constraints
+
+Product Layer
+
+- Dashboard responsiveness
+- Map interaction
+- Scenario simulation
+- Alert generation
+
+---
+
+🛣️ Roadmap
+
+Phase 1 — MVP
+
+🛰️ Satellite-based risk mapping
+📊 HydroLens command dashboard
+🗺️ Community risk visualization
+👨‍🌾 Farmer-facing view
+
+---
+
+Phase 2 — Scenario & Optimization
+
+🔮 Water-scarcity simulation
+💧 Risk-based resource prioritization
+☀️ Solar-aware irrigation scheduling
+📈 Scenario comparison
+
+---
+
+Phase 3 — Harvest Intelligence
+
+🌾 Harvest-window prediction
+📦 Storage-demand forecasting
+🚚 Transport coordination
+♻️ Residue-demand forecasting
+
+---
+
+Phase 4 — Ground Validation & FPO Pilot
+
+📍 Ground-truth collection
+🌱 Field-level validation
+🤝 FPO pilot deployment
+📊 Model calibration
+🔄 Feedback-driven model improvement
+
+---
+
+🔬 Research & Validation Direction
+
+The next step beyond the MVP is ground validation.
+
+HydroLens should be evaluated against:
+
+- Ground soil-moisture measurements
+- Crop-stage observations
+- Irrigation records
+- Weather observations
+- Harvest outcomes
+- Field-level yield data
+
+This allows the satellite-derived indicators and predictive models to be calibrated for specific crops, regions and seasons.
+
+---
+
+👥 Team
+
+Riya Arora
+
+Full Stack Developer & AI Arc
